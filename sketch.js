@@ -65,16 +65,16 @@ function draw() {
 
 
     if (keyIsPressed && key == 'd') {
-    	x = width/2; //the mouse location becomes
+    	x = width/2; //starting position of all strokes in the middle
   		y = 1; 
-	    while(y<800){//to bottom of screen
+	    while(y<800){//y will go down to the bottom of the screen
      		let leX = x + int(random(-12,12)); //creates the jagged effects
-     		let leY = y + 1;    //y just goes up
+     		let leY = y + 1;    
      		strokeWeight(2);
     		stroke(255,215,0); //gold
-    		line(x,y,leX,leY);//draw a tiny segment
-     		x = leX;  //then x and y are moved to the 
-     		y = leY;  //end of the segment and so on
+    		line(x,y,leX,leY);
+     		x = leX; 
+     		y = leY;  
   		}
  	 	y = y+1;
     }
