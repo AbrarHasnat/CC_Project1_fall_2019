@@ -78,6 +78,9 @@ function draw() {
   		}
  	 	y = y+1;
     }
+    if (frameCount%120 == 0){
+		background(255);
+	}
 
   	
     
