@@ -92,6 +92,7 @@ class Bolt{
 		this.x += random(-1,1);
 	}
 	display() {
+		stroke(255);
 		line(this.x,this.y,this.x-20,this.y+40);
 		line(this.x-20,this.y+40,this.x+10,this.y+60);
 		line(this.x+10,this.y+60,this.x,this.y+100);
@@ -113,6 +114,7 @@ class Zapline{
 		this.x += random(-3,3);
 	}
 	display(){
+		
 		line(this.x,this.y,this.x,this.yend);
 	}
 }
@@ -141,6 +143,10 @@ class Dropball {
 	}
 	move(){
 		this.y += 10;
+		this.x += 5 *(-1);
+		if (this.x == 0){
+			this.x = width;
+		}
 		if (this.y == 800){
 			this.y = drop;
 		}
