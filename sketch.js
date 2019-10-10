@@ -2,7 +2,6 @@ let drop = 10;
 let ball1;
 let ball2;
 let ball3;
-let rain = [];
 let x;
 let y;
 let jbox;
@@ -11,6 +10,11 @@ let bolt1;
 let bolt2;
 let bolt3;
 let bolt4;
+
+//raindrop 
+let rain = [];
+let gravity = 0.3;
+
 
 function setup() {
   // put setup code here
@@ -25,12 +29,57 @@ function setup() {
   bolt2 = new Bolt(width/4,3*height/4);
   bolt3 = new Bolt(3*width/4,height/4);
   bolt4 = new Bolt(3*width/4,3*height/4);
-  for(let o = 0; o < 100; o++){
-  	rain[o] = new Raindrop;
+  for (let i = 0; i < 15; i++){
+  	rain.push(new Drop());
   }
+  
 }
 
+function Drop() {
+	this.x = random(width);
+	this.y = 0;
+	this.length = 12;
+	this.spd = random(4,10);
+	this.eY = height;
+	this.falling = true;
+
+	this.show = function() {
+		if (this.falling == true) {
+			stroke(255);
+			line(this.x,this.y,this.x,this.y+this.length);
+		}
+	}
+
+	this.drip = function() {
+		this.y += this.spd;
+		this.spd += gravity;
+	}
+
+	this.top = function() {
+		if (this.y > height) {
+			this.x = random(width);
+			this.y = 0;
+			this.length = 12;
+			this.spd = random(4,10);
+			this.eY = height;
+			this.falling = true;
+
+		}
+	}
+
+
+
+};
+
 function draw() {
+	for (let i = 0; i < rain.length; i++) {
+    	rain[i].show();
+    	rain[i].drip();
+  
+    	rain[i].top();
+  	}
+
+
 	jbox.jitter();
 	jbox.display();
 
@@ -53,12 +102,7 @@ function draw() {
 		ball3.move();
 		ball3.display();
     }
-    if (keyIsPressed && key == 's') {
-	    for(let i = 0; i < 100;i++){
-  			rain[i].display();
-  			rain[i].update();
-  		}
-    }
+	
     fill(0,10); //reverts collors 
   	rect(0,0,width, height); //Not too sure why this line changes so much
   
@@ -85,6 +129,8 @@ function draw() {
   	
     
 }
+
+
 
 class Bolt{
 	constructor(x_,y_){
@@ -123,19 +169,7 @@ class Zapline{
 }
 
 
-class Raindrop {
-	constructor(){
-		this.x = random(0,width)
-		this.y = 10;
-	}
-	display(){
-		ellipse(this.x,this.y,2,10)
-	}
-	update(){
-		this.y += 7;
-	}
 
-}
 
 class Dropball {
 	constructor(wid){
@@ -172,8 +206,8 @@ class Shakebox {
 		this.d = 200;
 	}
 	jitter() {
-		this.x += random(-5,5);
-		this.y += random(-5,5);
+		this.x += random(-3,3);
+		this.y += random(-3,3);
 	}
 	display() {
 		fill(255,215,0);
