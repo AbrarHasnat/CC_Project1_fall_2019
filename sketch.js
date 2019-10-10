@@ -1,3 +1,5 @@
+//ADJECTIVE = Ecstatic (Or just anything high in energy)
+
 let drop = 10;
 let ball1;
 let ball2;
@@ -29,7 +31,11 @@ function setup() {
   bolt2 = new Bolt(width/4,3*height/4);
   bolt3 = new Bolt(3*width/4,height/4);
   bolt4 = new Bolt(3*width/4,3*height/4);
-  for (let i = 0; i < 15; i++){
+  bolt5 = new Bolt(width/4,height/4);
+  bolt6 = new Bolt(width/4,3*height/4);
+  bolt7 = new Bolt(3*width/4,height/4);
+  bolt8 = new Bolt(3*width/4,3*height/4);
+  for (let i = 0; i < 45; i++){
   	rain.push(new Drop());
   }
   
@@ -37,9 +43,9 @@ function setup() {
 
 function Drop() {
 	this.x = random(width);
-	this.y = 0;
+	this.y = height;
 	this.length = 12;
-	this.spd = random(4,10);
+	this.spd = random(20,30);
 	this.eY = height;
 	this.falling = true;
 
@@ -51,16 +57,16 @@ function Drop() {
 	}
 
 	this.drip = function() {
-		this.y += this.spd;
+		this.y -= this.spd;
 		this.spd += gravity;
 	}
 
 	this.top = function() {
-		if (this.y > height) {
+		if (this.y < 0) {
 			this.x = random(width);
-			this.y = 0;
+			this.y = height;
 			this.length = 12;
-			this.spd = random(4,10);
+			this.spd = random(20,30);
 			this.eY = height;
 			this.falling = true;
 
@@ -83,8 +89,6 @@ function draw() {
 	jbox.jitter();
 	jbox.display();
 
-	zap1.zap();
-	zap1.display();
 	bolt1.shake();
 	bolt1.display();
 	bolt2.shake();
@@ -93,6 +97,14 @@ function draw() {
 	bolt3.display();
 	bolt4.shake();
 	bolt4.display();
+	bolt5.shake();
+	bolt5.display();
+	bolt6.shake();
+	bolt6.display();
+	bolt7.shake();
+	bolt7.display();
+	bolt8.shake();
+	bolt8.display();
 
 	if (keyIsPressed && key == 'a') {
 	    ball1.move();
@@ -108,7 +120,13 @@ function draw() {
   
 
 
-    if (keyIsPressed && key == 'd') {
+    if (frameCount%145 == 0/*keyIsPressed && key == 'd'*/) {
+    	
+    	for(let i = 0; i<10;i++){
+    		let temp = new Bolt(random(width),random(height));
+    		temp.shake();
+    		temp.display();
+    	}
     	x = width/2; //starting position of all strokes in the middle
   		y = 1; 
 	    while(y<800){//y will go down to the bottom of the screen
@@ -122,7 +140,7 @@ function draw() {
   		}
  	 	y = y+1;
     }
-    if (frameCount%120 == 0){
+    if (frameCount%144 == 0){
 		background(255);
 	}
 
@@ -139,16 +157,19 @@ class Bolt{
 	}
 	shake(){
 		this.x += random(-1,1);
+		if (frameCount%115 == 0/*keyIsPressed && key == 'd'*/) {
+			this.x += random(-50,50);
+
+    	}
 	}
 	display() {
-		stroke(255);
+		stroke(255,215,0); //gold
 		line(this.x,this.y,this.x-20,this.y+40);
 		line(this.x-20,this.y+40,this.x+10,this.y+60);
 		line(this.x+10,this.y+60,this.x,this.y+100);
 		line(this.x,this.y,this.x-10,this.y+40);
 		line(this.x-10,this.y+40,this.x+20,this.y+60);
 		line(this.x+20,this.y+60,this.x,this.y+100);
-
 	}
 }
 
